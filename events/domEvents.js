@@ -1,5 +1,7 @@
 import { deleteBook, getBooks } from '../api/bookData';
 import { showBooks } from '../pages/books';
+// import { emptyAuthors } from '../pages/authors';
+// import { getAuthors } from '../api/authorData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -40,6 +42,7 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
         console.warn(e.target.id.split('--'));
+        // console.warn(getAuthors());
       }
     }
 
