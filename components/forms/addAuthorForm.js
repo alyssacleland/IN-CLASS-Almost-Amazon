@@ -1,6 +1,7 @@
 import clearDom from '../../utils/clearDom';
 import renderToDOM from '../../utils/renderToDom';
 
+// USING THIS FORM FOR BOTH CREATE AND UPDATE
 const addAuthorForm = () => {
   clearDom();
   const domString = `
