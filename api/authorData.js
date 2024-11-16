@@ -44,14 +44,14 @@ const createAuthor = (payload) => new Promise((resolve, reject) => {
 
 // FIXME: GET SINGLE AUTHOR
 const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books/${firebaseKey}.json`, {
+  fetch(`${endpoint}/authors/${firebaseKey}.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     }, // technically don't need the options obj for GET requests, but keeping it for consistency here
   })
     .then((response) => response.json())
-    .then((data) => resolve(data)) // will resolce a single object
+    .then((data) => resolve(data)) // will resolve a single object
     .catch(reject);
 });
 
@@ -70,7 +70,7 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 
 // FIXME: UPDATE AUTHOR
 const updateAuthor = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books/${payload.firebaseKey}.json`, {
+  fetch(`${endpoint}/authors/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
