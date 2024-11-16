@@ -1,8 +1,9 @@
 import { deleteBook, getBooks, getSingleBook } from '../api/bookData';
 import { showBooks } from '../pages/books';
-import { deleteSingleAuthor, getAuthors } from '../api/authorData';
+import { deleteSingleAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
 import { showAuthors } from '../pages/authors';
 import addBookForm from '../components/forms/addBookForm';
+import addAuthorForm from '../components/forms/addAuthorForm';
 
 // import { emptyAuthors } from '../pages/authors';
 // import { getAuthors } from '../api/authorData';
@@ -33,6 +34,7 @@ const domEvents = () => {
     if (e.target.id.includes('edit-book-btn')) {
       const [, firebaseKey] = e.target.id.split('--');
       getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj)); // i think bookObj... like, once the first part is resolved, the resulting data is what is passed into the next part (the .then), and we are just referring to it as bookObject here
+      console.warn('CLICKED EDIT/UPDATE BOOK');
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
@@ -56,9 +58,17 @@ const domEvents = () => {
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
+      addAuthorForm();
       console.warn('ADD AUTHOR');
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
+    // On click of update button, grab the author firebaseKey
+    if (e.target.id.includes('edit-author-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getSingleAuthor(firebaseKey).then((authorObj) => addAuthorForm(authorObj));
+      console.warn('CLICKED UPDATE AUTHOR');
+    }
   });
 };
 
