@@ -4,6 +4,9 @@ import { deleteSingleAuthor, getAuthors, getSingleAuthor } from '../api/authorDa
 import { showAuthors } from '../pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
+import { getBookDetails, getAuthorDetails } from '../api/mergedData';
+import viewBook from '../pages/viewBook';
+import viewAuthor from '../pages/viewAuthor';
 
 // import { emptyAuthors } from '../pages/authors';
 // import { getAuthors } from '../api/authorData';
@@ -37,10 +40,25 @@ const domEvents = () => {
       console.warn('CLICKED EDIT/UPDATE BOOK');
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
+
     if (e.target.id.includes('view-book-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getBookDetails(firebaseKey).then(viewBook); // Once the getBookDetails Promise resolves, the .then() method is called. It takes the result of the getBookDetails function (the book data) and passes it as an argument to the viewBook function.
+
       console.warn('VIEW BOOK', e.target.id);
       console.warn(e.target.id.split('--'));
       console.warn(getBooks());
+    }
+
+    // TODO: CLICK EVENT FOR VIEW AUTHOR DETAILS
+    if (e.target.id.includes('view-author-btn')) { // see 'view-author-btn' as id in authors.js which is basically like authors on dom
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getAuthorDetails(firebaseKey).then(viewAuthor);
+
+      console.warn('VIEW AUTHOR', e.target.id);
+      console.warn(e.target.id.split('--'));
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
