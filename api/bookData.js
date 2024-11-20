@@ -12,7 +12,13 @@ const getBooks = () => new Promise((resolve, reject) => {
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]); // update getBooks fx to handle a null value from the API when there are no books or authors in the database
+      }
+    })
     .catch(reject);
 });
 
