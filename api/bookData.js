@@ -4,8 +4,8 @@ import client from '../utils/client';
 const endpoint = client.databaseURL;
 
 // TODO: GET BOOKS
-const getBooks = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json`, {
+const getBooks = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/books.json?orderBy="uid"&equalTo="${uid}"`, { // updated to be user specific
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -77,15 +77,21 @@ const updateBook = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: FILTER BOOKS ON SALE
-const booksOnSale = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json?orderBy="sale"&equalTo=true`, {
+const booksOnSale = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/books.json?orderBy="uid"&equalTo="${uid}"`, { // update to order by uid
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      const onSale = Object.values(data).filter((item) => item.sale);
+      // Previously, you fetched all books and then filtered them for "on sale" status, but now you fetch the user's books by uid and then filter them in JavaScript to keep only those with sale: true. how? ...
+      // Object.values(data): This method takes the data object (which is the books retrieved from the database) and extracts all of its values. Since Firebase stores data in an object with each key being a unique book ID, Object.values(data) will return an array of book objects.
+      // .filter((item) => item.sale): This .filter() method goes through the array of books and returns only the books where the sale property is true.
+      resolve(onSale);
+    })
     .catch(reject);
 });
 

@@ -5,19 +5,20 @@ import { favoritedAuthors, getAuthors } from '../api/authorData';
 import { showAuthors, emptyAuthors } from '../pages/authors';
 
 // navigation events
-const navigationEvents = () => {
+const navigationEvents = (user) => { // updated to accept user, specifically for all books and sale books below too (where i pass user.uid)
   // LOGOUT BUTTON
   document.querySelector('#logout-button')
     .addEventListener('click', signOut);
 
   // TODO: BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then(showBooks);
+    booksOnSale(user.uid).then(showBooks); // update to accept user.uid in booksOnSale()
   });
 
   // TODO: ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    getBooks().then(showBooks);
+    console.warn(getBooks(user.uid).then(showBooks)); // updated to accept user.uid in getbooks()
+    console.warn('clicked all books');
   });
 
   // FIXME: STUDENTS Create an event listener for the Authors
