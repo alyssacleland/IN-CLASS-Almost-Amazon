@@ -3,7 +3,7 @@ import { createBook, updateBook, getBooks } from '../api/bookData';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
 
-const formEvents = () => {
+const formEvents = (user) => { // pass in usere
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
@@ -16,13 +16,14 @@ const formEvents = () => {
         price: document.querySelector('#price').value,
         author_id: document.querySelector('#author_id').value,
         sale: document.querySelector('#sale').checked,
+        uid: user.uid // add uid from the passed user object
       };
 
       createBook(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
 
         updateBook(patchPayload).then(() => {
-          getBooks().then(showBooks);
+          getBooks().then(showBooks); // i might need to pass user.uid in to get books, not sure yet. i don't think so bc get books fx itself will alrady use the uid parameter
         });
       });
     }
@@ -52,6 +53,8 @@ const formEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
+        uid: user.uid,
+        favorite: false // check on this later? (mytodo)
       };
 
       createAuthor(payload).then(({ name }) => {

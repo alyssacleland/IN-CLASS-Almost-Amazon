@@ -7,16 +7,18 @@ import navigationEvents from '../events/navigationEvents';
 import { getBooks } from '../api/bookData';
 import { showBooks } from '../pages/books';
 
-const startApp = () => {
-  domBuilder(); // BUILD THE DOM
-  domEvents(); // ADD THE EVENT LISTENTERS TO THE DOM
-  formEvents(); // ADD FORM EVENT LISTENTERS TO THE DOM
+// We want to ensure that all the events get access to the UID so when we are CRUDing, we have the UID available.
+
+const startApp = (user) => {
+  domBuilder(user); // BUILD THE DOM, // ADD USER SO THAT YOU CAN UPDATE CALLS
+  domEvents(user); // ADD THE EVENT LISTENTERS TO THE DOM
+  formEvents(user); // ADD FORM EVENT LISTENTERS TO THE DOM
   navBar(); // DYNAMICALLY ADD THE NAV
   logoutButton(); // ADD THE LOGOUT BUTTON COMPONENT
-  navigationEvents(); // ATTACH THE EVENT LISTENERS TO THE NAVBAR
+  navigationEvents(user); // ATTACH THE EVENT LISTENERS TO THE NAVBAR. also passed user here because i need to update getbooks navigation events to have user.uid pass into getbooks there. so it's not just showing up on startapp
 
   // TODO: Put all books on the DOM on App load
-  getBooks().then((books) => showBooks(books));
+  console.warn(getBooks(user.uid).then((books) => showBooks(books)));
 };
 
 export default startApp;
