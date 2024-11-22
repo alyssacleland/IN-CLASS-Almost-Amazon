@@ -23,7 +23,7 @@ const formEvents = (user) => { // pass in usere
         const patchPayload = { firebaseKey: name };
 
         updateBook(patchPayload).then(() => {
-          getBooks().then(showBooks); // i might need to pass user.uid in to get books, not sure yet. i don't think so bc get books fx itself will alrady use the uid parameter
+          getBooks(user.uid).then(showBooks); // i might need to pass user.uid in to get books, not sure yet. i don't think so bc get books fx itself will alrady use the uid parameter
         });
       });
     }
@@ -42,7 +42,7 @@ const formEvents = (user) => { // pass in usere
       };
 
       updateBook(payload).then(() => {
-        getBooks().then(showBooks);
+        getBooks(user.uid).then(showBooks);
       });
     }
 
@@ -61,7 +61,7 @@ const formEvents = (user) => { // pass in usere
         const patchPayload = { firebaseKey: name };
 
         updateAuthor(patchPayload).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(user.uid).then(showAuthors);
         });
       });
     }
@@ -76,7 +76,7 @@ const formEvents = (user) => { // pass in usere
       };
 
       updateAuthor(payload).then(() => {
-        getAuthors().then(showAuthors);
+        getAuthors(user.uid).then(showAuthors);
       });
       console.warn('CLICKED UPDATE AUTHOR');
     }

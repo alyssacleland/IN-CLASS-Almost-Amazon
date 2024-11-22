@@ -11,7 +11,7 @@ import viewAuthor from '../pages/viewAuthor';
 // import { emptyAuthors } from '../pages/authors';
 // import { getAuthors } from '../api/authorData';
 
-const domEvents = () => {
+const domEvents = (user) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // TODO: CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
@@ -22,14 +22,14 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteBook(firebaseKey).then(() => {
-          getBooks().then(showBooks);
+          getBooks(user.uid).then(showBooks);
         });
       }
     }
 
     // TODO: CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
-      addBookForm();
+      addBookForm(user);
       console.warn('ADD BOOK');
     }
 
@@ -68,7 +68,7 @@ const domEvents = () => {
         console.warn('DELETE AUTHOR', e.target.id);
         const [, firebaseKey] = e.target.id.split('--');
         deleteAuthorBooksRelationship(firebaseKey).then(() => { // updated to delete authors books when author is deleted, with delete authorBooksRelationship fx (in merged data file)
-          getAuthors().then(showAuthors);
+          getAuthors(user.uid).then(showAuthors);
         });
         // console.warn(getAuthors());
       }
