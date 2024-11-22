@@ -36,7 +36,7 @@ const domEvents = (user) => {
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
       const [, firebaseKey] = e.target.id.split('--');
-      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj)); // i think bookObj... like, once the first part is resolved, the resulting data is what is passed into the next part (the .then), and we are just referring to it as bookObject here
+      getSingleBook(firebaseKey).then((bookObj) => addBookForm(user, bookObj)); // i think bookObj... like, once the first part is resolved, the resulting data is what is passed into the next part (the .then), and we are just referring to it as bookObject here
       console.warn('CLICKED EDIT/UPDATE BOOK');
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
