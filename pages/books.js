@@ -10,7 +10,14 @@ const showBooks = (array) => {
   clearDom();
 
   const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-book-btn">Add A Book</button>';
-  renderToDOM('#add-button', btnString);
+  renderToDOM('#add-button', btnString); // add-button is dynamically added thru domBuilder (which is rendered in startapp), also cleared thru clearDom
+
+  //   const searchBar = `<div class="input-group mb-3">
+  //   <input type="text" class="form-control" placeholder="Search Books" aria-label="Search Books" aria-describedby="button-addon2">
+  //   <button style="padding: 10px 30px; font-size: 20px"; class="tn btn-outline-secondary" type="button" id="search">⌕</button>
+  // </div>`;
+  //   renderToDOM('#form-container', searchBar);
+  // lol nvm, the search bar is already there, in the navbar...
 
   let domString = '';
   array.forEach((item) => {

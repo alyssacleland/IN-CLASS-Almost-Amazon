@@ -1,6 +1,6 @@
-import { getBooks, booksOnSale } from '../api/bookData';
+import { getBooks, booksOnSale, bookSearch } from '../api/bookData';
 import { signOut } from '../utils/auth';
-import { showBooks } from '../pages/books';
+import { showBooks, emptyBooks } from '../pages/books';
 import { favoritedAuthors, getAuthors } from '../api/authorData';
 import { showAuthors, emptyAuthors } from '../pages/authors';
 
@@ -43,16 +43,22 @@ const navigationEvents = (user) => { // updated to accept user, specifically for
   });
 
   // STRETCH: SEARCH
-  document.querySelector('#search').addEventListener('keyup', (e) => {
+  document.querySelector('#search').addEventListener('keyup', (e) => { // The keyup event is fired when a key is released.
     const searchValue = document.querySelector('#search').value.toLowerCase();
     console.warn(searchValue);
 
     // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13) { // Keycode 13 means the Enter key.
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
+      bookSearch(user.uid, searchValue).then((result) => {
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
-      // OTHERWISE SHOW THE STORE
-
+        if (result.length === 0) {
+          emptyBooks();
+          // OTHERWISE SHOW THE STORE
+        } else {
+          showBooks(result);
+        }
+      });
       document.querySelector('#search').value = '';
     }
   });
