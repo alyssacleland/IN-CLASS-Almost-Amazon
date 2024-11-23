@@ -48,7 +48,7 @@ const navigationEvents = (user) => { // updated to accept user, specifically for
     console.warn(searchValue);
 
     // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
-    if (e.keyCode === 13) { // Keycode 13 means the Enter key.
+    if (e.keyCode) { // when key is pressed (changed this from when enter is pressed so that it searches as you type)
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
       bookSearch(user.uid, searchValue).then((result) => {
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
@@ -59,9 +59,9 @@ const navigationEvents = (user) => { // updated to accept user, specifically for
           showBooks(result);
         }
       });
-      document.querySelector('#search').value = '';
     }
   });
+  document.querySelector('#search').value = ''; // clears the searchbar input. but actually this is not happening and i'm not gonna worry about it because idk when i would want it to happen when i don't have enter key as the search trigger
 };
 
 export default navigationEvents;
